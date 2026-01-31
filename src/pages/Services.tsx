@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Shield, Briefcase, Scale, Users, FileText, Gavel, Building, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
+import { BlurText, Magnet, FadeContent, TextReveal, StaggerContainer, StaggerItem } from "@/components/animations";
 
 const services = [
   {
@@ -62,19 +63,26 @@ const Services = () => {
         <div className="absolute inset-0 grid-pattern opacity-50"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl">
-            <span className="font-mono text-sm bg-primary px-4 py-2 border-4 border-foreground shadow-brutal-sm inline-block mb-8">
-              PRACTICE AREAS
-            </span>
-            
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.9] mb-8">
-              LEGAL
-              <br />
-              <span className="text-stroke">SERVICES</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl font-mono opacity-80 max-w-2xl">
-              From criminal defense to corporate law, we provide aggressive, results-driven representation across all practice areas.
-            </p>
+            <FadeContent delay={0.1}>
+              <span className="font-mono text-sm bg-primary px-4 py-2 border-4 border-foreground shadow-brutal-sm inline-block mb-8">
+                PRACTICE AREAS
+              </span>
+            </FadeContent>
+
+            <TextReveal delay={0.2}>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.9] mb-8">
+                LEGAL
+                <br />
+                <span className="text-stroke">SERVICES</span>
+              </h1>
+            </TextReveal>
+
+            <BlurText
+              text="From criminal defense to corporate law, we provide aggressive, results-driven representation across all practice areas."
+              className="text-xl md:text-2xl font-mono opacity-80 max-w-2xl"
+              delay={80}
+              animateBy="words"
+            />
           </div>
         </div>
       </section>
@@ -82,82 +90,93 @@ const Services = () => {
       {/* Services Grid */}
       <section className="py-20 md:py-32 border-b-4 border-foreground">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8">
+          <StaggerContainer className="grid md:grid-cols-2 gap-8">
             {services.map((service, i) => (
-              <div
-                key={i}
-                className="brutal-card p-8 group"
-                style={{ transform: `rotate(${i % 2 === 0 ? '-0.5' : '0.5'}deg)` }}
-              >
-                <div className="flex items-start gap-6">
-                  <div className="w-20 h-20 bg-primary border-4 border-foreground shadow-brutal-sm flex items-center justify-center shrink-0 group-hover:rotate-neg-2 transition-transform">
-                    <service.icon size={40} />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
-                    <p className="font-mono text-sm opacity-80 mb-4">{service.description}</p>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, j) => (
-                        <li key={j} className="flex items-center gap-2 font-mono text-sm">
-                          <span className="w-2 h-2 bg-primary"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+              <StaggerItem key={i}>
+                <div
+                  className="brutal-card p-8 group"
+                  style={{ transform: `rotate(${i % 2 === 0 ? '-0.5' : '0.5'}deg)` }}
+                >
+                  <div className="flex items-start gap-6">
+                    <div className="w-20 h-20 bg-primary border-4 border-foreground shadow-brutal-sm flex items-center justify-center shrink-0 group-hover:rotate-neg-2 transition-transform">
+                      <service.icon size={40} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
+                      <p className="font-mono text-sm opacity-80 mb-4">{service.description}</p>
+                      <ul className="space-y-2">
+                        {service.features.map((feature, j) => (
+                          <li key={j} className="flex items-center gap-2 font-mono text-sm">
+                            <span className="w-2 h-2 bg-primary"></span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* Process Section */}
       <section className="py-20 md:py-32 bg-muted border-b-4 border-foreground">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <FadeContent className="text-center mb-16">
             <span className="font-mono text-sm bg-background px-4 py-2 border-4 border-foreground shadow-brutal-sm inline-block mb-6">
               HOW WE WORK
             </span>
             <h2 className="text-4xl md:text-6xl font-bold">
               OUR <span className="bg-primary px-4">PROCESS</span>
             </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-4 gap-8">
+          </FadeContent>
+
+          <StaggerContainer className="grid md:grid-cols-4 gap-8">
             {[
               { step: "01", title: "Consultation", desc: "Free initial meeting to understand your case" },
               { step: "02", title: "Strategy", desc: "Develop a tailored legal approach" },
               { step: "03", title: "Execution", desc: "Aggressive representation and advocacy" },
               { step: "04", title: "Resolution", desc: "Achieve the best possible outcome" },
             ].map((item, i) => (
-              <div key={i} className="text-center">
-                <div className="w-20 h-20 bg-foreground text-background border-4 border-foreground shadow-brutal-sm flex items-center justify-center mx-auto mb-6 font-mono font-bold text-2xl">
-                  {item.step}
+              <StaggerItem key={i}>
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-foreground text-background border-4 border-foreground shadow-brutal-sm flex items-center justify-center mx-auto mb-6 font-mono font-bold text-2xl">
+                    {item.step}
+                  </div>
+                  <h3 className="font-bold text-xl mb-2">{item.title}</h3>
+                  <p className="font-mono text-sm opacity-80">{item.desc}</p>
                 </div>
-                <h3 className="font-bold text-xl mb-2">{item.title}</h3>
-                <p className="font-mono text-sm opacity-80">{item.desc}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       {/* CTA */}
       <section className="py-20 md:py-32 bg-primary">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-primary-foreground">
-            NEED LEGAL HELP?
-          </h2>
-          <p className="text-xl font-mono mb-10 max-w-2xl mx-auto text-primary-foreground/80">
-            Get a free case evaluation and discover how we can fight for you.
-          </p>
-          <Button asChild variant="brutal" size="xl">
-            <Link to="/contact">
-              Free Consultation
-              <ArrowRight className="ml-2" />
-            </Link>
-          </Button>
+          <TextReveal>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-primary-foreground">
+              NEED LEGAL HELP?
+            </h2>
+          </TextReveal>
+          <FadeContent delay={0.3}>
+            <p className="text-xl font-mono mb-10 max-w-2xl mx-auto text-primary-foreground/80">
+              Get a free case evaluation and discover how we can fight for you.
+            </p>
+          </FadeContent>
+          <FadeContent delay={0.5}>
+            <Magnet padding={80} magnetStrength={2}>
+              <Button asChild variant="brutal" size="xl">
+                <Link to="/contact">
+                  Free Consultation
+                  <ArrowRight className="ml-2" />
+                </Link>
+              </Button>
+            </Magnet>
+          </FadeContent>
         </div>
       </section>
     </Layout>
